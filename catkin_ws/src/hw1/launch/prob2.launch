@@ -1,8 +1,0 @@
-<launch>
-<!-- vim: set ft=xml noet : -->
-  <node name="prob2" pkg="hw1" type="prob2"/>
-
-	<node type="rviz" name="rviz" pkg="rviz" args="-d $(find hw1)/config/prob2.rviz"/>
-
-  <node type="rqt_ez_publisher" name="sliders" pkg="rqt_ez_publisher"/>
-</launch>

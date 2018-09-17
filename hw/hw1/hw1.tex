@@ -1,0 +1,203 @@
+\documentclass{../homework}
+\usepackage{ dsfont }
+
+\name{Timothy Devon Morris}
+\course{Me En 537}
+\term{Fall 2018}
+\hwnum{1}
+
+\begin{document}
+
+\begin{problem}[Corke Chap 2]
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    See \texttt{prob2.m}
+    \part
+    See \texttt{prob4.m}
+    \part
+    See \texttt{prob5.m}
+    \part
+    See \texttt{prob10.m}
+    \part
+    No, consider the following homogeneous transformation
+    \[ T =
+      \begin{bmatrix}
+        1 & 0 & 0 & 1 \\
+        0 & 1 & 0 & 1 \\
+        0 & 0 & 1 & 1 \\
+        0 & 0 & 0 & 1 \\
+      \end{bmatrix}
+    \]
+    Note that $TT^T$ is not the identity
+    \[
+      TT^T = 
+      \begin{bmatrix}
+        2 & 1 & 1 & 1\\
+        1 & 2 & 1 & 1\\
+        1 & 1 & 2 & 1\\
+        1 & 1 & 1 & 1
+      \end{bmatrix}
+    \]
+    In fact it is not even a homogeneous transformation.
+  \part
+  Note since we are in a right handed coordinate frame, and we have two vectors, the other must be completely determined. Thus we have
+  \[
+    ^0R_1 = 
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 0 & 1 \\
+      0 & -1 & 0
+    \end{bmatrix}
+  \]
+  And converting to quaternion gives us
+  \[
+    ^0q_1 = .707 \langle -.707, 0, 0\rangle
+  \]
+
+  \end{parts}
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+ \begin{parts}
+   \part
+   \[^0R_3 = 
+     \begin{bmatrix}
+     1 &     0    &    0      \\
+     0 & \cos(\phi) & -\sin(\phi) \\
+     0 & \sin(\phi) & \cos(\phi)
+     \end{bmatrix}
+     \begin{bmatrix}
+     \cos(\theta) & -\sin(\theta) & 0 \\
+     \sin(\theta) & \cos(\theta)  & 0 \\
+     0     &    0      & 1
+     \end{bmatrix}
+     \begin{bmatrix}
+     \cos(\psi)  & 0 & \sin(\psi) \\
+     0 			  & 1 &    0     \\
+     -\sin(\psi) & 0 & \cos(\psi)
+     \end{bmatrix}
+   \]
+ \part
+   \[^0R_3 = \begin{bmatrix}
+   1 &     0    &    0      \\
+   0 & \cos(\phi) & -\sin(\phi) \\
+   0 & \sin(\phi) & \cos(\phi)
+   \end{bmatrix}
+   \begin{bmatrix}
+   \cos(\theta) & -\sin(\theta) & 0 \\
+   \sin(\theta) & \cos(\theta)  & 0 \\
+   0     &    0      & 1
+   \end{bmatrix}
+   \begin{bmatrix}
+   \cos(\psi)  & 0 & \sin(\psi) \\
+   0 			  & 1 &    0     \\
+   -\sin(\psi) & 0 & \cos(\psi)
+   \end{bmatrix}
+   \]
+ \end{parts} 
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+  \[
+  ^0R_1 =
+  \begin{bmatrix}
+  \cos(\pi/2)  & 0 & \sin(\pi/2) \\
+  0 			  & 1 &    0     \\
+  -\sin(\pi/2) & 0 & \cos(\pi/2)
+  \end{bmatrix}
+  \begin{bmatrix}
+  1 &     0    &    0      \\
+  0 & \cos(\pi/2) & -\sin(\pi/2) \\
+  0 & \sin(\pi/2) & \cos(\pi/2)
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    0 & 1 & 0 \\
+    0 & 0 & -1 \\
+    -1 & 0 & 0
+  \end{bmatrix}
+  \]
+If you sketched this, it would look very similar to the original frame, but with the new x being the old y, the new y being the old z and the new z being the old x.
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+ Note we have that 
+ \[^2R_3 =\ ^2R_1\ ^1R_3 = (^1R_2)^T\ ^1R_3 = 
+ \begin{bmatrix}
+  0 & 0 & -1 \\
+  \frac{\sqrt{3}}{2} & \frac{1}{2} & 0\\
+  \frac{1}{2} & -\frac{\sqrt{3}}{2} & 0
+ \end{bmatrix}
+ \]
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+ Using Matlab symbolic variables, I got
+ \[ 
+   \begin{aligned}
+     R_{x,\theta}&R_{y,\phi}R_{z,\pi}R_{y,-\phi}R_{x,-\theta} = \\
+                                                            &\begin{bmatrix}
+     2\sin(\phi)^2 -1 & -2\cos(\phi)\sin(\phi)\sin(\theta) & 2\cos(\phi)\cos(\theta)\sin(\phi) \\
+     -2\cos(\phi)\sin(\phi)\sin(\theta) & 2\sin(\theta)^2 - 2\sin(\phi)^2\sin(\theta)^2 -1 & -2\cos(\phi)^2\cos(\theta)\sin(\theta) \\
+     2\cos(\phi)\cos(\theta)\sin(\phi) & -2\cos(\phi)\cos(\theta)\sin(\theta) & 2\cos(\phi)^2\cos(\theta)^2 -1
+   \end{bmatrix}
+ \end{aligned}
+ \]
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+  Using the matlab toolbox, the axis-angle representation is
+  \[
+    \theta = 1.71777, \quad k =
+    \begin{bmatrix}
+      0.357407 \\
+      0.862856 \\
+      0.357407
+    \end{bmatrix}
+  \]
+  The quaternion representation is 
+  \[
+    q = 0.65328 \langle 0.2706, 0.65328, 0.2706 \rangle
+  \]
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+  Using the ZYZ euler angles,
+  \[ ^0R_3 = R_{z,\pi/2}IR_{z,\pi/4} = R_{z, 3 \pi/4} =
+  \begin{bmatrix}
+  \cos(3\pi/4) & -\sin(3\pi/4) & 0 \\
+  \sin(3\pi/4) & \cos(3\pi/4)  & 0 \\
+  0     &    0      & 1
+  \end{bmatrix}
+  \]
+  Which implies that the new x direction is
+  \[^0x_1 =
+  \begin{bmatrix}
+    -\frac{\sqrt{2}}{2} \\
+    \frac{\sqrt{2}}{2} \\
+    0
+  \end{bmatrix}\]
+\end{solution}
+
+\end{document}
