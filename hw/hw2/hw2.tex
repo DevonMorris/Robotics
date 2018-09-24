@@ -137,6 +137,35 @@
      \end{tabular}
      \end{center}
      
+     Thus we have
+     \[
+       A_1 = 
+       \begin{bmatrix}
+         c_{\theta_1 + \pi/2} & 0 & s_{\theta_1 + \pi/2} & a_1c_{\theta_1 + \pi/2} \\
+         s_{\theta_1 + \pi/2} & 0 & -c_{\theta_1 + \pi/2} & a_1s_{\theta_1 + \pi/2} \\
+         0 & 1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_2 = 
+       \begin{bmatrix}
+         1 & 0 & 0 & 0 \\
+         0 & 1 & 0 & 0 \\
+         0 & 0 & 1 & d_2 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     Thus we have that 
+     \[
+       ^0T_2 = A_1A_2  =
+       \begin{bmatrix}
+         c_{\theta_1 + \pi/2} & 0 & s_{\theta_1 + \pi/2} & a_1c_{\theta_1 + \pi/2} + d_2s_{\theta_1+\pi/2} \\
+         s_{\theta_1 + \pi/2} & 0 & -c_{\theta_1 + \pi/2} & a_1s_{\theta_1 + \pi/2} - d_2c_{\theta_1 + \pi/2}\\
+         0 & 1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
      
   \end{parts}
 \end{problem}
