@@ -293,13 +293,75 @@
       \hline
       1 & $\theta_1$ & $d_1$ & 0 & $-\pi/2$ \\
       2 & $\theta_2$ & 0 & $a_2$ & 0 \\
-      3 & $\theta_3 + \pi/2$ & 0 & $a_3$ & -$\pi/2$ \\
-      4 & $\theta_4$ & $d_1$ & 0 & $\pi/2$ \\
+      3 & $\theta_3 + \pi/2$ & 0 & 0 & $\pi/2$ \\
+      4 & $\theta_4 + \pi/2$ & $d_4$ & 0 & -$\pi/2$ \\
       5 & $\theta_5$ & 0 & 0 & $\pi/2$ \\
       6 & $\theta_6$ & $d_6$ & 0 & 0 \\
       \hline
      \end{tabular}
      \end{center}
+     Thus we have the following transformations
+     \[
+       A_1(\theta_1) = 
+       \begin{bmatrix}
+         c_{\theta_1} & 0 & -s_{\theta_1} & 0 \\
+         s_{\theta_1} & 0 & c_{\theta_1} & 0 \\
+         0 & -1 & 0 & d_1 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_2(\theta_2) = 
+       \begin{bmatrix}
+         c_{\theta_2} & 0 & -s_{\theta_2} & a_2 c_{\theta_2} \\
+         s_{\theta_2} & 0 & c_{\theta_2} & a_2 s_{\theta_2} \\
+         0 & -1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_3(\theta_3) = 
+       \begin{bmatrix}
+         -s_{\theta_3} & 0 & c_{\theta_3} & 0 \\
+         c_{\theta_3} & 0 & s_{\theta_3} & 0 \\
+         0 & 1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_4(\theta_4) = 
+       \begin{bmatrix}
+         -s_{\theta_4} & 0 & -c_{\theta_4} & 0 \\
+         c_{\theta_4}&  0 & -s_{\theta_4} & 0 \\
+         0 & -1 & 0 & d_4 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_5(\theta_5) = 
+       \begin{bmatrix}
+         c_{\theta_5} & 0 & s_{\theta_5} & 0 \\
+         s_{\theta_5} & 0 & -c_{\theta_5} & 0 \\
+         0 & 1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_6(\theta_6) = 
+       \begin{bmatrix}
+         c_{\theta_6} & -s_{\theta_6} & 0 & 0 \\
+         s_{\theta_6} & c_{\theta_6} & 0 & 0 \\
+         0 & 0 & 1 & d_6 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     We have the forward kinematics as
+     \[
+         ^0T_6 &= A_1(\theta_1)A_2(\theta_2)A_3(\theta_3)A_4(\theta_4)A_5(\theta_5)A_6(\theta_6) 
+     \]
+
+     \part
+     see \texttt{prob38.m}
      
 
 
