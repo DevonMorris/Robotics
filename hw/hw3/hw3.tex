@@ -1,0 +1,258 @@
+\documentclass{../homework}
+\usepackage{ dsfont }
+
+\name{Timothy Devon Morris}
+\course{Me En 537}
+\term{Fall 2018}
+\hwnum{3}
+
+\begin{document}
+
+\begin{problem}[Corke Chap 7]
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part{7-2}
+    I ran \texttt{mdl\_puma560} and then played around with \texttt{p560.teach()}.
+    \part{7-6}
+    See \texttt{prob76.m}
+  \end{parts}
+\end{solution}
+
+\begin{problem}
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    This robot has DH parameters of
+       \begin{center}
+       \begin{tabular}{|c|c|c|c|r|}
+        \hline
+        Link & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+        \hline
+        1 & $\theta_1$ & $d_1$ & 0 & $\pi/2$ \\
+        2 & $\theta_2$ & 0 & $a_2$ & 0 \\
+        3 & $\theta_3$ & 0 & $a_3$ & 0 \\
+        \hline
+       \end{tabular}
+       \end{center}
+
+       This gives us the following geometric jacobian (using the toolbox)
+       \[
+         J(q) = 
+         \begin{bmatrix}
+           -s_{\theta_1}(a_3c_{\theta_2 + \theta_3} + a_2c_{\theta_3}) & -c_{\theta_1}(a_3s_{\theta_2 + \theta_3} + a_2s_{\theta_2}) & -a_3s_{\theta_2 + \theta_3}c_{\theta_1} \\
+           c_{\theta_1}(a_3c_{\theta_2 + \theta_3} + a_2c_{\theta_2}) & -s_{\theta_1}(a_3s_{\theta_2 + \theta_3} + a_2s_{\theta_2}) & -a_3s_{\theta_2 + \theta_3}s_{\theta_1} \\
+           0 & a_3c_{\theta_2 + \theta_3} + a_2c_{\theta_2} & a_3c_{\theta_3 + \theta_3} \\
+           0 & s_{\theta_1} & s_{\theta_1} \\
+           0 & -c_{\theta_1} & -c_{\theta_1} \\
+           1 & 0 & 0
+         \end{bmatrix}
+       \]
+       See \texttt{prob2a.m} for some calculations of the geometric jacobians. One example that we have is $q = [0\ \pi/2\ 0]^T$, in this case we have
+       \[
+         J\left(
+         \begin{bmatrix}
+           0 \\ 
+           \pi/2 \\
+           0
+         \end{bmatrix}
+         \right)
+         =
+         \begin{bmatrix}
+           0 &  -0.6 & -0.3 \\
+           0 & 0 & 0 \\
+           0 & 0 & 0 \\
+           0 & 0 & 0 \\
+           0 & -1 & -1 \\
+           1 & 0 & 0
+         \end{bmatrix}
+       \]
+       In this case, the robot arm is pointing straight up. Intuitively, the arm can only have x linear velocity and can only have angular velocity in y and z.
+       \part
+       We have that the DH parameters up to the point $o_c$ are
+       \begin{center}
+       \begin{tabular}{|c|c|c|c|r|}
+        \hline
+        Link & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+        \hline
+        1 & $\theta_1$ & 0 & $a_1$ & 0 \\
+        2 & $\theta_2$ & 0 & $a_c$ & 0 \\
+        \hline
+       \end{tabular}
+       \end{center}
+
+       Which gives us the matrices
+       \[
+         A_1 = \begin{bmatrix}
+           c_{\theta_1} & -s_{\theta_1} & 0 & a_1c_{\theta_1} \\
+           s_{\theta_1} & c_{\theta_1} & 0 & a_1cs_{\theta_1} \\
+           0 & 0 & 1 & 0 \\
+           0 & 0 & 0 & 1
+         \end{bmatrix}
+       \]
+       \[
+         A_2 = \begin{bmatrix}
+           c_{\theta_2} & -s_{\theta_2} & 0 & a_cc_{\theta_1} \\
+           s_{\theta_2} & c_{\theta_2} & 0 & a_cs_{\theta_1} \\
+           0 & 0 & 1 & 0 \\
+           0 & 0 & 0 & 1
+         \end{bmatrix}
+       \]
+       And thus we have
+       \[
+         ^0T_c = 
+         \begin{bmatrix}
+           c_{\theta_1 + \theta_2} & -s_{\theta_1 + \theta_2} & 0 & a_c c_{\theta_1+\theta_2} + a_1c_{\theta_1} \\
+           s_{\theta_1 + \theta_2} & c_{\theta_1 + \theta_2} & 0 & a_cs_{\theta_1+\theta_2} + a_1s_{\theta_1} \\
+           0 & 0 & 1 & 0 \\
+           0 & 0 & 0 & 1
+         \end{bmatrix}
+       \]
+       Specifically, we have that the forward kinematics of the point $o_c$ are
+       \[
+         o_c^0(\theta_1,\theta_2) = 
+         \begin{bmatrix}
+           a_c c_{\theta_1 + \theta_2} + a_1c_{\theta_1} \\
+           a_c s_{\theta_1 + \theta_2} + a_1s_{\theta_1} \\
+           0
+         \end{bmatrix}
+       \]
+       Since we get no contribution from the third joint, our (zero frame) jacobian becomes
+       \[
+         J(q) = 
+         \begin{bmatrix}
+           z_0^0 \times (o_c^0) & z_1^0 \times (o_c^0 - o_1^0) & 0 \\
+           z_0^0 & z_1^0 & 0 
+         \end{bmatrix}
+         =
+         \begin{bmatrix}
+           a_1c_{\theta_1 + \theta_2}s_{\theta_2} - s_{\theta_1 + \theta_2}(a_c + a_1c_{\theta_2}) & -a_cs_{\theta_1 + \theta_2} & 0\\
+           c_{\theta_1 + \theta_2}(a_c + a_1c_{\theta_2}) + a_1s_{\theta_1 + \theta_2}s_{\theta_2} & a_c c_{\theta_1 + \theta_2} & 0\\
+           0 & 0 & 0 \\
+           0 & 0 & 0 \\
+           0 & 0 & 0 \\
+           1 & 1 & 0
+           
+         \end{bmatrix}
+       \]
+     \part
+     This robot has the following DH parameters
+     \begin{center}
+     \begin{tabular}{|c|c|c|c|r|}
+      \hline
+      Link & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+      \hline
+      1 & $\theta_1$ & 0 & $a_1$ & $-\pi/2$ \\
+      2 & $\theta_2$ & 0 & $a_2$ & 0 \\
+      \hline
+     \end{tabular}
+     \end{center}
+
+     Which gives us the forward kinematics of
+     \[
+       A_1 = 
+       \begin{bmatrix}
+         c_{\theta_1} & 0 & -s_{\theta_1} & a_1c_{\theta_1} \\
+         s_{\theta_1} & 0 & c_{\theta_1} & a_1s_{\theta_1} \\
+         0 & -1 & 0 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     \[
+       A_2 =
+       \begin{bmatrix}
+         c_{\theta_2} & -s_{\theta_2} & 0 & a_2c_{\theta_2} \\
+         s_{\theta_2} & c_{\theta_2} & 0 & a_2s_{\theta_2} \\
+         0 & 0 & 1 & 0 \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     And our transform is
+     \[
+       ^0T_2 = 
+       \begin{bmatrix}
+         c_{\theta_1}c_{\theta_2} & -s_{\theta_2}c_{\theta_1} & - s_{\theta_1} & a_2c_{\theta_1}c_{\theta_2} + a_1c_{\theta_1} \\
+         s_{\theta_1}c_{\theta_2} & -s_{\theta_1}s_{\theta_2} & c_{\theta_1} & a_2s_{\theta_1}c_{\theta_2} + a_1s_{\theta_1} \\
+         -s_{\theta_2} & -c_{\theta_2} & 0 & -a_2s_{\theta_2} \\
+         0 & 0 & 0 & 1
+       \end{bmatrix}
+     \]
+     In this case, we know that the jacobian of the end effector in the end effector frame must be
+     \[
+      ^2J(q) = 
+      \begin{bmatrix}
+        z_0^2 \times (o^2_2 - o^2_0) & z_1^2 \times (o^2_2 - o^2_1) \\
+        z_0^2 & z_1^2
+      \end{bmatrix}
+     \]
+     Putting everything in the right frame, we have the following
+     \[
+       z_0^2 =\ ^2R_0z_0^0 =
+       \begin{bmatrix}
+         -s_{\theta_2} \\
+         -c_{\theta_2} \\
+         0
+       \end{bmatrix}
+     \]
+     \[
+       o_2^2 = \begin{bmatrix}
+         0 \\
+         0 \\
+         0
+       \end{bmatrix}
+     \]
+     \[
+       \begin{bmatrix}
+         o_0^2 \\
+         1
+       \end{bmatrix}
+       =\ ^2T_0
+       \begin{bmatrix}
+         o_0 \\
+         1
+       \end{bmatrix}
+       =
+       \begin{bmatrix}
+         -a_2 - a_1c_{\theta_2} \\
+         a_1s_{\theta_2} \\
+         0 \\
+         1
+       \end{bmatrix}
+     \]
+     \[
+       o_1^2 = 
+       \begin{bmatrix}
+         a_2 \\
+         0 \\
+         0
+       \end{bmatrix}
+     \]
+     \[
+       z_1^2 =  
+       \begin{bmatrix}
+       0 \\
+       0 \\
+       1
+       \end{bmatrix}
+     \]
+     Which gives us the geometric jacobian as 
+     \[
+      ^2J(q) = 
+      \begin{bmatrix}
+        0 & 0 \\
+        0 & a_2 \\
+        a_1 + a_2c_{\theta_2} & 0 \\
+        -s_{\theta_2} & 0 \\
+        -c_{\theta_2} & 0 \\
+        0 & 1
+      \end{bmatrix}
+     \]
+     \part
+     \part
+  \end{parts}
+\end{solution}
+
+\end{document}
