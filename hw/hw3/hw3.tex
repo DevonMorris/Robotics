@@ -122,12 +122,13 @@
        \]
        Since we get no contribution from the third joint, our (zero frame) jacobian becomes
        \[
-         J(q) = 
+         \begin{aligned}
+           J(q) &= 
          \begin{bmatrix}
            z_0^0 \times (o_c^0) & z_1^0 \times (o_c^0 - o_1^0) & 0 \\
            z_0^0 & z_1^0 & 0 
-         \end{bmatrix}
-         =
+         \end{bmatrix} \\
+         &= 
          \begin{bmatrix}
            a_1c_{\theta_1 + \theta_2}s_{\theta_2} - s_{\theta_1 + \theta_2}(a_c + a_1c_{\theta_2}) & -a_cs_{\theta_1 + \theta_2} & 0\\
            c_{\theta_1 + \theta_2}(a_c + a_1c_{\theta_2}) + a_1s_{\theta_1 + \theta_2}s_{\theta_2} & a_c c_{\theta_1 + \theta_2} & 0\\
@@ -135,8 +136,8 @@
            0 & 0 & 0 \\
            0 & 0 & 0 \\
            1 & 1 & 0
-           
          \end{bmatrix}
+         \end{aligned}
        \]
      \part
      This robot has the following DH parameters
@@ -250,8 +251,164 @@
         0 & 1
       \end{bmatrix}
      \]
+     Now we will write the Jacobian in the base frame and transform it into the end effector frame.
+     \[
+      ^0J(q) = 
+      \begin{bmatrix}
+        z_0^0 \times (o^0_2 - o^0_0) & z_1^0 \times (o^0_2 - o^0_1) \\
+        z_0^0 & z_1^0
+      \end{bmatrix}
+     \]
+     Substituting in the correct values from our forward kinematics, we have that
+     \[
+       ^0J(q) = 
+       \begin{bmatrix}
+         -a_1s_{\theta_1} - a_2s_{\theta_1}c_{\theta_2} & -a_2c_{\theta_1}s_{\theta_2} \\
+         a_1c_{\theta_1} - a_2c_{\theta_1}c_{\theta_2} & -a_2s_{\theta_1}s_{\theta_2} \\
+         0 & -a_2c_{\theta_2} \\
+         0 & -s_{\theta_1} \\
+         0 & c_{\theta_1} \\
+         1 & 0 
+       \end{bmatrix}
+     \]
+     And we have
+     \[
+       ^2J(q) =
+       \begin{bmatrix}
+         ^2R_0 & 0 \\
+         0 & ^2R_0 
+       \end{bmatrix}\ ^0J(q)
+     \]
+     Where
+     \[^2R_0 = 
+       \begin{bmatrix}
+         c_{\theta_1}c_{\theta_2} & -s_{\theta_2}c_{\theta_1} & - s_{\theta_1}\\
+         s_{\theta_1}c_{\theta_2} & -s_{\theta_1}s_{\theta_2} & c_{\theta_1} \\
+         -s_{\theta_2} & -c_{\theta_2} & 0\\
+       \end{bmatrix}^T
+     \]
+     This gives us
+     \[
+       \begin{bmatrix}
+         ^2R_0 & 0 \\
+         0 & ^2R_0 
+       \end{bmatrix}\
+       ^0J(q) = 
+      \begin{bmatrix}
+        0 & 0 \\
+        0 & a_2 \\
+        a_1 + a_2c_{\theta_2} & 0 \\
+        -s_{\theta_2} & 0 \\
+        -c_{\theta_2} & 0 \\
+        0 & 1
+      \end{bmatrix}
+     \]
+     So the answers are consistent!
      \part
+     See \texttt{geo\_jacobian.m}. I checked this function in various configurations on the stanford robot.
      \part
+     We have the relation that $\tau = J^T(q)F$. Plugging this in for various configurations gives
+     \begin{parts}[r]
+      \part 
+      \[
+        J^T \left( \begin{bmatrix}
+          0 \\
+          \pi/4
+        \end{bmatrix} \right)
+        \begin{bmatrix}
+          -1\\ 
+          0 \\
+          0 \\
+          0 \\
+          0 \\
+          0
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+          0 \\
+          a_2/\sqrt{2}
+        \end{bmatrix}
+      \]
+      \part
+      \[
+        J^T \left( \begin{bmatrix}
+          0 \\
+          \pi/2
+        \end{bmatrix} \right)
+        \begin{bmatrix}
+          -1\\ 
+          0 \\
+          0 \\
+          0 \\
+          0 \\
+          0
+        \end{bmatrix} = 
+        \begin{bmatrix}
+          0 \\
+          a_2
+        \end{bmatrix}
+      \]
+      \part
+      \[
+        J^T \left( \begin{bmatrix}
+          \pi/4 \\
+          \pi/4
+        \end{bmatrix} \right)
+        \begin{bmatrix}
+          -1\\ 
+          -1 \\
+          0 \\
+          0 \\
+          0 \\
+          0
+        \end{bmatrix} = 
+        \begin{bmatrix}
+          0 \\
+          a_2
+        \end{bmatrix}
+      \]
+      \part
+      \[
+        J^T \left( \begin{bmatrix}
+          0 \\
+          0 
+        \end{bmatrix} \right)
+        \begin{bmatrix}
+          0\\ 
+          0 \\
+          1 \\
+          0 \\
+          0 \\
+          0
+        \end{bmatrix} = 
+        \begin{bmatrix}
+          0 \\
+          -a_2
+        \end{bmatrix}
+      \]
+      \part
+      \[
+        J^T \left( \begin{bmatrix}
+          0 \\
+          0 
+        \end{bmatrix} \right)
+        \begin{bmatrix}
+          1\\ 
+          0 \\
+          0 \\
+          0 \\
+          0 \\
+          0
+        \end{bmatrix} = 
+        \begin{bmatrix}
+          0 \\
+          0
+        \end{bmatrix}
+      \]
+      If the force is a reaction force, you will need to change the sign on the force vector, thus negating the joint torques.
+
+     \end{parts}
+     
   \end{parts}
 \end{solution}
 
