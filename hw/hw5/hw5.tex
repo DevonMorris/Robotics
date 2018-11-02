@@ -133,7 +133,7 @@
             \label{}
             \caption{Increasing number of steps to complete trajectory}
        \end{figure}
-       \part{7-4}
+       \part{7-4} See \texttt{prob7\_4.m}. \texttt{ikine} is much slower that \texttt{ikine6s}, around 25 times slower. \texttt{ikine6s} is also slightly more accurate since it's calculating an analytic solution.
     \end{parts}
     \part
     Let $\omega = [\omega_1, \omega_2, \omega_3]^T,\ p = [p_1, p_2, p_3]$, we have that
@@ -159,5 +159,56 @@
         \omega \times p
     \]
     So the skew symmetric matrix is, in fact, consistent with the cross product.
+    \part
+    Let 
+    \[ 
+      R = R_{z,\psi}R_{y,\theta}R_{z, \phi}
+    \]
+    Now we wish to find $\dot{R}$. We have that
+    \[
+      \begin{aligned}
+        \dot{R} &= \dot{R}_{z,\psi}R_{y,\theta}R_{z,\phi} + R_{z,\psi}\dot{R}_{y,\theta}R_{z,\phi} + R_{z,\psi}R_{y,\theta}\dot{R}_{z,\phi} \\
+                &= \dot{\psi}\frac{dR_{z,\psi}}{d\psi}R_{y,\theta}R_{z,\phi} +  \dot{\theta}R_{z,\psi}\frac{dR_{y,\theta}}{d\theta}R_{z,\phi} + \dot{\phi}R_{z,\psi}R_{y,\theta}\frac{dR_{z,\phi}}{d\phi}
+      \end{aligned}
+    \]
+    Let $\omega_z = [0, 0, 1]^T$, and $\omega_y = [0, 1, 0]^T$. Thus we have that
+    \[
+      \dot{R} = R_{z,\psi} \left[ \dot{\psi}\omega_z \right]_{\times}R_{y,\theta}R_{z,\phi} +
+      R_{z,\psi}R_{y,\theta} \left[ \dot{\theta}\omega_y \right]_{\times}R_{z,\phi} + R_{z,\psi}R_{y,\theta}R_{z,\phi} \left[ \dot{\phi} \omega_z \right]_{\times}
+    \]
+    Now we have the identity that $R \left[ \omega \right]_{\times}R^T = \left[ R\omega \right]_{\times}$. So applying this identity, and exploiting the linearity of $ \left[\ \cdot\ \right]_{\times}$ we get
+    \[
+      \begin{aligned}
+        \dot{R} &= \left[ \dot{\psi}R_{z,\psi}\omega_z \right]_{\times}R + \left[ \dot{\theta}R_{z,\psi}R_{y,\theta} \omega_y\right]_{\times}R + \left[ \dot{\phi} R_{z,\psi}R_{y,\theta}R_{z, \phi}\omega_z\right]_{\times}R \\
+                &= \left[ \dot{\psi} \omega_z + \dot{\theta}R_{z,\psi}\omega_y + \dot{\psi}R_{z,\psi}R_{y,\theta}\omega_z \right] R
+       \end{aligned}
+     \]
+     Thus we have that
+     \[
+       \begin{aligned}
+         \omega &= \dot{\psi} \omega_z + \dot{\theta}R_{z,\psi}\omega_y + \dot{\psi}R_{z,\psi}R_{y,\theta}\omega_z  \\
+          &= \begin{bmatrix}
+           0 \\
+           0 \\
+           \dot{\psi}
+          \end{bmatrix} + 
+          \begin{bmatrix}
+            - s_{\psi} \dot{\theta} \\
+            c_{\psi} \dot{\theta} \\
+            0
+          \end{bmatrix} + 
+          \begin{bmatrix}
+            c_{\psi}c_{\theta}\dot{\phi} \\
+            s_{\psi}s_{\theta}\dot{\phi} \\
+            c_{\theta}\dot{\phi}
+          \end{bmatrix} \\
+          &=
+          \begin{bmatrix}
+            c_{\psi}c_{\theta}\dot{\phi} - s_{\psi}\dot{\theta} \\
+            s_{\psi}s_{\theta}\dot{\phi} + c_{\psi}\dot{\theta} \\
+            c_{\theta}\dot{\phi} + \dot{\psi}
+          \end{bmatrix}
+       \end{aligned}
+     \]
 \end{parts}
 \end{document}
