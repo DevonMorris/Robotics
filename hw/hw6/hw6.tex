@@ -190,5 +190,19 @@
             \caption{Torques for Baxter Left Arm}
        \end{figure}
 
+       \part{} See \texttt{prob3.m} and the figures below. The two methods gave very similar values. Any discrepancies are artifacts in the integration, viscous friction that goes unnacounted in the manual integration.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{prob3euler.png}
+            \label{torq}
+            \caption{Manual integration}
+       \end{figure}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{prob3sim.png}
+            \label{torq}
+            \caption{Simulink Integration}
+       \end{figure}
+
    \end{parts}
 \end{document}
