@@ -1,0 +1,60 @@
+\documentclass{../homework}
+\usepackage{ dsfont }
+\usepackage{ float }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage{ physics }
+
+\name{Timothy Devon Morris}
+\course{Me En 537}
+\term{Fall 2018}
+\hwnum{8}
+
+\begin{document}
+    \begin{problem}
+        See \texttt{square.m}, \texttt{mytr2delta.m} and \texttt{prob1.slx}. It is ok to use this controller in situations with a high gear ratio. In these situations you can feasible command any torque within your bandwidth and acheive it very quickly. It allows you to be able to ignore the dynamics of the motors and the links.
+    \end{problem}
+    \begin{problem}
+        See \texttt{sl\_puma.slx}. My controller didn't work very well, but it's probably because I didn't wrap my angle residual or tune my controller very well. Furthermore since it's just a simple joint PD controller we shouldn't expect it to do super great.
+      \begin{figure}[H]
+        \centering
+        \includegraphics[scale=.3]{traj1.png}
+      \end{figure}
+      \begin{figure}[H]
+        \centering
+        \includegraphics[scale=.3]{traj2.png}
+      \end{figure}
+    \end{problem}
+
+    \begin{problem}
+        \begin{parts}
+            \part
+            From my experiments, it appears that feed-forward control is much more "chattery" than computed torque control. However, they both maintain fairly good tracking error when the model is good.
+          \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{ct.png}
+            \caption{Computed Torque}
+          \end{figure}
+
+          \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{ff.png}
+            \caption{Feed Forward Control}
+        \end{figure}
+            \part
+            As you can easily see, when we perturb the parameters the error characteristics are significantly worse. The computed torque control gets much worse because we are trying to cancel out our dynamics, but since our dynamics are perturbed from the actual dynamics there are large errors in the tracking. This is further compounded by the nonlinearities associated with $M(q), C(q,\dot{q})$ and $G(q)$. Feed forward control also gets much worse because we are trying to predict torques that will put us in the nominal joint configuration at our command. This requires a decent model, but when we perturb the model our predictions are not very accurate.
+          \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{ctpert.png}
+            \caption{Computed Torque Perturbed}
+          \end{figure}
+
+          \begin{figure}[H]
+            \centering
+            \includegraphics[scale=.3]{ffpert.png}
+            \caption{Feed Forward Perturbed}
+          \end{figure}
+            
+        \end{parts}
+    \end{problem}
+\end{document}
